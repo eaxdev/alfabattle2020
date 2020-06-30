@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.9.RELEASE" apply false
     kotlin("jvm") version "1.3.72" apply false
     kotlin("plugin.spring") version "1.3.50" apply false
+    id("org.openapi.generator") version "4.3.1" apply false
 }
 
 repositories {
