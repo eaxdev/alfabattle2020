@@ -1,4 +1,4 @@
-package io.github.eaxdev.dto
+package io.github.eaxdev
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
