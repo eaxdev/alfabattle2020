@@ -29,7 +29,7 @@ class Config {
 
     private fun sslContext(): SslContext {
         val cert = Config::class.java.classLoader.getResourceAsStream("apidevelopers.cer")
-        val key = Config::class.java.classLoader.getResourceAsStream("apidevelopers.key")
+        val key = Config::class.java.classLoader.getResourceAsStream("apidevelopers.key") // PKCS8
 
         return SslContextBuilder.forClient()
             .keyManager(cert, key)

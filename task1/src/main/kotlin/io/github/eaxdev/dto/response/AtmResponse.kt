@@ -13,6 +13,7 @@ package io.github.eaxdev.dto.response
 
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.github.eaxdev.dto.atmapi.ATMDetails
 
 /**
  *
@@ -37,5 +38,18 @@ data class AtmResponse(
     val longitude: kotlin.String? = null,
     @JsonProperty("payments")
     val payments: kotlin.Boolean? = null
-)
+) {
+    companion object {
+        fun of(atmDetail: ATMDetails): AtmResponse {
+            return AtmResponse(
+                city = atmDetail.address?.city,
+                deviceId = atmDetail.deviceId,
+                latitude = atmDetail.coordinates?.latitude,
+                longitude = atmDetail.coordinates?.longitude,
+                location = atmDetail.address?.location,
+                payments = atmDetail.services?.payments == "Y"
+            )
+        }
+    }
+}
 
