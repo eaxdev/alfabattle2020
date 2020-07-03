@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.constraints.Positive
 
@@ -18,6 +19,13 @@ class AtmController {
     @GetMapping("/atms/{deviceId}")
     fun getDataByDeviceId(@Positive @PathVariable("deviceId") deviceId: Int) : ResponseEntity<AtmResponse> {
         return ResponseEntity.ok(atmService.getInfoByDeviceId(deviceId))
+    }
+
+    @GetMapping("/atms/nearest")
+    fun getNearestAtm(@Positive @RequestParam("latitude") latitude: String,
+                      @Positive @RequestParam("longitude") longitude: String,
+                      @RequestParam("payments") payments: Boolean = false) : ResponseEntity<AtmResponse> {
+        return ResponseEntity.ok(atmService.getNearestAtm(latitude, longitude, payments))
     }
 
 }

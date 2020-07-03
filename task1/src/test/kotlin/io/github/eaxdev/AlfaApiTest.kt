@@ -35,4 +35,51 @@ class AlfaApiTest {
             .andExpect(jsonPath("$.payments", equalTo(false)))
             .andExpect(jsonPath("$.location", equalTo("Нижняя Красносельская ул., 6, стр. 1")))
     }
+
+    @Test
+    fun getAtmInfoSample() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/153463")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.city", equalTo("Москва")))
+            .andExpect(jsonPath("$.deviceId", equalTo(153463)))
+            .andExpect(jsonPath("$.latitude", equalTo("55.6610213")))
+            .andExpect(jsonPath("$.longitude", equalTo("37.6309405")))
+            .andExpect(jsonPath("$.payments", equalTo(false)))
+            .andExpect(jsonPath("$.location", equalTo("Старокаширское ш., 4, корп. 10")))
+    }
+
+    @Test
+    fun getNearestAtmInfoSample() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/nearest?latitude=55.66&longitude=37.63")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.city", equalTo("Москва")))
+            .andExpect(jsonPath("$.deviceId", equalTo(153463)))
+            .andExpect(jsonPath("$.latitude", equalTo("55.6610213")))
+            .andExpect(jsonPath("$.longitude", equalTo("37.6309405")))
+            .andExpect(jsonPath("$.payments", equalTo(false)))
+            .andExpect(jsonPath("$.location", equalTo("Старокаширское ш., 4, корп. 10")))
+    }
+
+    @Test
+    fun getNearestWithPaymentsAtmInfoSample() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/nearest?latitude=55.66&longitude=37.63&payments=true")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.city", equalTo("Москва")))
+            .andExpect(jsonPath("$.deviceId", equalTo(210612)))
+            .andExpect(jsonPath("$.latitude", equalTo("55.66442")))
+            .andExpect(jsonPath("$.longitude", equalTo("37.628051")))
+            .andExpect(jsonPath("$.payments", equalTo(true)))
+            .andExpect(jsonPath("$.location", equalTo("Каширское шоссе, д. 14")))
+    }
+
+
 }
