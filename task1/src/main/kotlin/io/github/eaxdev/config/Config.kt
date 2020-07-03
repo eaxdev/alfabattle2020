@@ -5,11 +5,12 @@ import io.netty.handler.ssl.SslContextBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
+import org.springframework.util.ResourceUtils
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.netty.http.client.HttpClient
 
 @Configuration
-class Config {
+class Config(private val applicationProperties: ApplicationProperties) {
 
     @Bean
     fun webClient(): WebClient {
@@ -28,8 +29,8 @@ class Config {
     }
 
     private fun sslContext(): SslContext {
-        val cert = Config::class.java.classLoader.getResourceAsStream("apidevelopers.cer")
-        val key = Config::class.java.classLoader.getResourceAsStream("apidevelopers.key") // PKCS8
+        val cert = ResourceUtils.getFile(applicationProperties.certificate)
+        val key = ResourceUtils.getFile(applicationProperties.privateKey) // PKCS8
 
         return SslContextBuilder.forClient()
             .keyManager(cert, key)

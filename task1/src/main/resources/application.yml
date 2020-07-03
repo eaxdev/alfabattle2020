@@ -1,2 +1,8 @@
 server:
   port: 8080
+
+application:
+  alfa-client-id: d7d269b5-69b6-4f6d-8c82-40ed848d65b8
+  alfa-atm-info-url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service/atms
+  private-key: classpath:apidevelopers.key
+  certificate: classpath:apidevelopers.cer
