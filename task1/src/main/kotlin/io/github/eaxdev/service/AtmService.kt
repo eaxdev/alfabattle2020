@@ -4,10 +4,8 @@ import io.github.eaxdev.dto.atmapi.ATMDetails
 import io.github.eaxdev.dto.atmapi.JSONResponseBankATMDetails
 import io.github.eaxdev.dto.response.AtmResponse
 import io.github.eaxdev.provider.AlfaAtmInfoProvider
-import io.github.eaxdev.service.AtmService.Companion.calculateDistance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.Math.pow
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -44,7 +42,7 @@ class AtmService {
         return response?.data?.atms?.filter {
             it.coordinates?.latitude?.contains(latitude) ?: false
                     && it.coordinates?.longitude?.contains(longitude) ?: false
-        } ?.minBy { it.calculateDistance(latitude, longitude) } ?: throw AtmNotFound()
+        }?.minBy { it.calculateDistance(latitude, longitude) } ?: throw AtmNotFound()
     }
 
     private fun findNearestWithPaymentsOnly(
