@@ -59,13 +59,13 @@ class AtmService {
 
     companion object {
         private fun ATMDetails.calculateDistance(latitude: String, longitude: String): Double {
-            val atmLatitude = coordinates?.latitude?.toDouble()
-            val atmLongitude = coordinates?.longitude?.toDouble()
+            val atmLatitude = coordinates?.latitude?.toDouble() ?: return Double.NEGATIVE_INFINITY
+            val atmLongitude = coordinates.longitude?.toDouble() ?: return Double.NEGATIVE_INFINITY
 
-            val x = atmLatitude?.minus(latitude.toDouble())?.pow(2)
-            val y = atmLongitude?.minus(longitude.toDouble())?.pow(2)
+            val x = atmLatitude.minus(latitude.toDouble()).pow(2)
+            val y = atmLongitude.minus(longitude.toDouble()).pow(2)
 
-            return sqrt(x!!.plus(y!!))
+            return sqrt(x.plus(y))
         }
     }
 }
