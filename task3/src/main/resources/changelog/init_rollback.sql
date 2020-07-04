@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS queue_log;
+DROP TABLE IF EXISTS branches;

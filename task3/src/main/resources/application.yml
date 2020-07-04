@@ -1,2 +1,10 @@
 server:
-  port: 8083
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/alfa_battle
+    username: alfa_battle
+    password: qwe123
+  liquibase:
+    change-log: classpath:changelog/changelog-master.xml
