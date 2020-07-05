@@ -18,4 +18,9 @@ class BranchService {
         val branch = branchRepository.findById(branchId) ?: throw BranchNotFound()
         return BranchDto.of(branch)
     }
+
+    fun findNearestBranch(lon: Double, lat: Double): BranchDto {
+        val (branch, distance) = branchRepository.findNearestBranch(lon, lat) ?: throw BranchNotFound()
+        return BranchDto.of(branch, distance)
+    }
 }

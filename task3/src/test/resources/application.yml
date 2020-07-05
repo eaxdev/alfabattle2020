@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:12.3-alpine:///alfa_battle
+    url: jdbc:tc:postgis:///alfa_battle
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   liquibase:
     change-log: classpath:changelog/changelog-master.xml

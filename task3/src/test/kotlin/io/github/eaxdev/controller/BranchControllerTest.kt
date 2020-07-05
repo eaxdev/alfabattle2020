@@ -42,4 +42,20 @@ class BranchControllerTest {
             .andExpect(jsonPath("$.lat", equalTo(55.7621)))
             .andExpect(jsonPath("$.address", equalTo("Мясницкая ул., 13, стр. 1")))
     }
+
+    @Test
+    @DataSet("branches.yml")
+    fun getNearestBranchByIdSample() {
+        mockMvc.perform(
+            get("/branches?lat=55.773284&lon=37.624125")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id", equalTo(631)))
+            .andExpect(jsonPath("$.title", equalTo("Цветной Бульвар")))
+            .andExpect(jsonPath("$.lon", equalTo(37.6227)))
+            .andExpect(jsonPath("$.lat", equalTo(55.7695)))
+            .andExpect(jsonPath("$.address", equalTo("Цветной бул., 16/1")))
+            .andExpect(jsonPath("$.distance", equalTo(430)))
+    }
 }
