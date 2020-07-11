@@ -1,6 +1,5 @@
 package io.github.eaxdev
 
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,8 +9,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringJUnitConfig
 @AutoConfigureMockMvc
@@ -81,5 +80,13 @@ class AlfaApiTest {
             .andExpect(jsonPath("$.location", equalTo("Каширское шоссе, д. 14")))
     }
 
-
+    @Test
+    fun atmNotFoundSample() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/1")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.status", equalTo("atm not found")))
+    }
 }

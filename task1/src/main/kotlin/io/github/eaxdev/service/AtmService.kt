@@ -21,7 +21,7 @@ class AtmService {
     fun getInfoByDeviceId(deviceId: Int): AtmResponse {
         val atmDataMono = atmInfoProvider.getAtmData()
         val block = atmDataMono.block()
-        val atmData = block?.data?.atms?.first { it.deviceId == deviceId } ?: throw AtmNotFound()
+        val atmData = block?.data?.atms?.find { it.deviceId == deviceId } ?: throw AtmNotFound()
         return AtmResponse.of(atmData)
     }
 
