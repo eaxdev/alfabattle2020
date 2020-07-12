@@ -14,7 +14,7 @@ package io.github.eaxdev.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.github.eaxdev.persistence.model.Branch
+import io.github.eaxdev.persistence.model.BranchEntity
 import kotlin.math.roundToInt
 
 /**
@@ -41,10 +41,10 @@ data class BranchDto(
     val distance: Int?
 ) {
     companion object {
-        fun of(branch: Branch, distance: Int? = null): BranchDto {
+        fun of(branch: BranchEntity, distance: Int? = null): BranchDto {
             return BranchDto(
                 address = branch.address,
-                id = branch.id.toLong(),
+                id = branch.id.value.toLong(),
                 lat = branch.lat,
                 lon = branch.lon,
                 title = branch.title,

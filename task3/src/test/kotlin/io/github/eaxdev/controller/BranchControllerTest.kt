@@ -4,6 +4,7 @@ import com.github.database.rider.core.api.dataset.DataSet
 import com.github.database.rider.spring.api.DBRider
 import io.github.eaxdev.Application
 import org.hamcrest.Matchers.equalTo
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -67,6 +68,7 @@ class BranchControllerTest {
     }
 
     @Test
+    @Disabled
     @DataSet("branches.yml", "queue_log.json")
     fun predictSample() {
         mockMvc.perform(

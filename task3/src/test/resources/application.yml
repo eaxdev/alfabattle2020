@@ -4,3 +4,4 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   liquibase:
     change-log: classpath:changelog/changelog-master.xml
+logging.level.Exposed: DEBUG

@@ -4,8 +4,11 @@ import io.github.eaxdev.dto.response.BranchDto
 import io.github.eaxdev.dto.response.BranchDtoWithPredicting
 import io.github.eaxdev.persistence.repository.BranchRepository
 import io.github.eaxdev.persistence.repository.QueueRepository
+import org.apache.commons.math3.stat.descriptive.rank.Median
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
 
 class BranchNotFound : RuntimeException()
 
@@ -29,7 +32,12 @@ class BranchService {
     }
 
     fun predict(branchId: Int, dayOfWeek: Int, hourOfDay: Int): BranchDtoWithPredicting {
-        val allByBranches = queueRepository.findAllByBranchId(branchId)
+        val allQueries = queueRepository.findAllByBranchId(branchId)
         return BranchDtoWithPredicting()
+    }
+
+    private fun calculateMedian(values: DoubleArray): Double {
+        val median = Median()
+        return median.evaluate(values)
     }
 }
