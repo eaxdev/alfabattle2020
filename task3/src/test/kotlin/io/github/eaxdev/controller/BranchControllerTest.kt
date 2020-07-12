@@ -58,4 +58,14 @@ class BranchControllerTest {
             .andExpect(jsonPath("$.address", equalTo("Цветной бул., 16/1")))
             .andExpect(jsonPath("$.distance", equalTo(430)))
     }
+
+    @Test
+    fun branchNotFoundSample() {
+        mockMvc.perform(
+            get("/branches/1")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.status", equalTo("branch not found")))
+    }
 }

@@ -4,7 +4,6 @@ import io.github.eaxdev.dto.response.BranchDto
 import io.github.eaxdev.persistence.repository.BranchRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 class BranchNotFound : RuntimeException()
 
