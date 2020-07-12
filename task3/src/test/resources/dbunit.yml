@@ -1,1 +1,4 @@
 caseInsensitiveStrategy: LOWERCASE
+properties:
+  batchedStatements: true
+  batchSize: 1000

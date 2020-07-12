@@ -9,7 +9,7 @@ abstract class AbstractRepository<MODEL : Any, TABLE : IdTable>(open val table: 
 
     protected abstract fun readRow(r: ResultRow): MODEL
 
-    private fun Iterable<ResultRow>.readRows(): List<MODEL> {
+    fun Iterable<ResultRow>.readRows(): List<MODEL> {
         return map { r -> readRow(r) }
     }
 
