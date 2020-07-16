@@ -68,7 +68,6 @@ class BranchControllerTest {
     }
 
     @Test
-    @Disabled
     @DataSet("branches.yml", "queue_log.json")
     fun predictSample() {
         mockMvc.perform(

@@ -10,5 +10,5 @@ class QueueRepository {
 
     fun findAllByBranchId(branchId: Int): List<QueueEntity> = QueueEntity
         .find { QueueTable.branch eq branchId }
-        .with(QueueEntity::branch).toList()
+        .with(QueueEntity::branch)
 }
