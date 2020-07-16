@@ -10,7 +10,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.Duration
 import java.time.temporal.ChronoUnit
 import kotlin.math.round
 import kotlin.math.roundToInt
@@ -55,7 +54,7 @@ class BranchService {
 
     private fun calculatePredicting(queue: List<QueueEntity>): Long {
         val timeForWait = queue.map {
-            Duration.between(it.startTimeOfWait,it.endTimeOfWait).toMillis() / 1000.0
+            ChronoUnit.SECONDS.between(it.startTimeOfWait, it.endTimeOfWait).toDouble()
         }.toDoubleArray()
         return calculateMedian(timeForWait).roundToLong()
     }
