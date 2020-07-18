@@ -11,11 +11,19 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.testcontainers.containers.FixedHostPortGenericContainer
+import org.testcontainers.containers.GenericContainer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
 
+@Testcontainers
 @SpringJUnitConfig
 @AutoConfigureMockMvc
 @SpringBootTest(classes = [Application::class])
 class AlfaApiTest {
+
+    val websocketContainer = FixedHostPortGenericContainer<Nothing>("arpmipg/alfa-battle:task1-websocket")
+        .apply { withFixedExposedPort(8100, 8100) }
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -88,5 +96,48 @@ class AlfaApiTest {
         )
             .andExpect(status().isNotFound)
             .andExpect(jsonPath("$.status", equalTo("atm not found")))
+    }
+
+    @Test
+    fun getNearestAtmWithAlfik1Sample() {
+        if (!websocketContainer.isRunning) {
+            websocketContainer.start()
+        }
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/nearest-with-alfik?latitude=55.66&longitude=37.63&alfik=300000")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[0].city", equalTo("Москва")))
+            .andExpect(jsonPath("$.[0].deviceId", equalTo(153463)))
+            .andExpect(jsonPath("$.[0].latitude", equalTo("55.6610213")))
+            .andExpect(jsonPath("$.[0].longitude", equalTo("37.6309405")))
+            .andExpect(jsonPath("$.[0].payments", equalTo(false)))
+            .andExpect(jsonPath("$.[0].location", equalTo("Старокаширское ш., 4, корп. 10")))
+    }
+
+    @Test
+    fun getNearestAtmWithAlfik2Sample() {
+        if (!websocketContainer.isRunning) {
+            websocketContainer.start()
+        }
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/nearest-with-alfik?latitude=55.66&longitude=37.63&alfik=400000")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[0].city", equalTo("Москва")))
+            .andExpect(jsonPath("$.[0].deviceId", equalTo(153463)))
+            .andExpect(jsonPath("$.[0].latitude", equalTo("55.6610213")))
+            .andExpect(jsonPath("$.[0].longitude", equalTo("37.6309405")))
+            .andExpect(jsonPath("$.[0].payments", equalTo(false)))
+            .andExpect(jsonPath("$.[0].location", equalTo("Старокаширское ш., 4, корп. 10")))
+
+            .andExpect(jsonPath("$.[1].city", equalTo("Москва")))
+            .andExpect(jsonPath("$.[1].deviceId", equalTo(153465)))
+            .andExpect(jsonPath("$.[1].latitude", equalTo("55.6602801")))
+            .andExpect(jsonPath("$.[1].longitude", equalTo("37.633823")))
+            .andExpect(jsonPath("$.[1].payments", equalTo(false)))
+            .andExpect(jsonPath("$.[1].location", equalTo("Каширское ш., 18")))
     }
 }

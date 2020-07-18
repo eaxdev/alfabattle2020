@@ -17,15 +17,26 @@ class AtmController {
     private lateinit var atmService: AtmService
 
     @GetMapping("/atms/{deviceId}")
-    fun getDataByDeviceId(@Positive @PathVariable("deviceId") deviceId: Int) : ResponseEntity<AtmResponse> {
+    fun getDataByDeviceId(@Positive @PathVariable("deviceId") deviceId: Int): ResponseEntity<AtmResponse> {
         return ResponseEntity.ok(atmService.getInfoByDeviceId(deviceId))
     }
 
     @GetMapping("/atms/nearest")
-    fun getNearestAtm(@Positive @RequestParam("latitude") latitude: String,
-                      @Positive @RequestParam("longitude") longitude: String,
-                      @RequestParam("payments") payments: Boolean = false) : ResponseEntity<AtmResponse> {
+    fun getNearestAtm(
+        @Positive @RequestParam("latitude") latitude: String,
+        @Positive @RequestParam("longitude") longitude: String,
+        @RequestParam("payments") payments: Boolean = false
+    ): ResponseEntity<AtmResponse> {
         return ResponseEntity.ok(atmService.getNearestAtm(latitude, longitude, payments))
+    }
+
+    @GetMapping("/atms/nearest-with-alfik")
+    fun getNearestAtmWithAlfik(
+        @Positive @RequestParam("latitude") latitude: String,
+        @Positive @RequestParam("longitude") longitude: String,
+        @Positive @RequestParam("alfik") alfik: Int
+    ): ResponseEntity<List<AtmResponse>> {
+        return ResponseEntity.ok(atmService.getNearestAtmWithAlfik(latitude, longitude, alfik))
     }
 
 }

@@ -4,6 +4,7 @@ import io.github.eaxdev.dto.atmapi.ATMDetails
 import io.github.eaxdev.dto.atmapi.JSONResponseBankATMDetails
 import io.github.eaxdev.dto.response.AtmResponse
 import io.github.eaxdev.provider.AlfaAtmInfoProvider
+import io.github.eaxdev.provider.AlfikInfoProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import kotlin.math.pow
@@ -17,6 +18,9 @@ class AtmService {
 
     @Autowired
     private lateinit var atmInfoProvider: AlfaAtmInfoProvider
+
+    @Autowired
+    private lateinit var alfikInfoProvider: AlfikInfoProvider
 
     fun getInfoByDeviceId(deviceId: Int): AtmResponse {
         val atmDataMono = atmInfoProvider.getAtmData()
@@ -55,10 +59,29 @@ class AtmService {
         }?.minBy { it.calculateDistance(latitude, longitude) } ?: throw AtmNotFound()
     }
 
+    fun getNearestAtmWithAlfik(latitude: String, longitude: String, alfik: Int): List<AtmResponse> {
+        val atmDataMono = atmInfoProvider.getAtmData()
+        val block = atmDataMono.block()
+        val atms = block?.data?.atms?.sortedBy { it.calculateDistance(latitude, longitude) } ?: throw AtmNotFound()
+
+        var alfikCount = 0L
+        var take = 0;
+
+        for (atm in atms) {
+            take++
+            alfikCount += alfikInfoProvider.getAlfikByDeviceId(atm.deviceId!!).alfik
+            if (alfikCount >= alfik) {
+                break
+            }
+        }
+
+        return atms.take(take).map { AtmResponse.of(it) }
+    }
+
     companion object {
         private fun ATMDetails.calculateDistance(latitude: String, longitude: String): Double {
-            val atmLatitude = coordinates?.latitude?.toDouble() ?: return Double.NEGATIVE_INFINITY
-            val atmLongitude = coordinates.longitude?.toDouble() ?: return Double.NEGATIVE_INFINITY
+            val atmLatitude = coordinates?.latitude?.toDouble() ?: return Double.POSITIVE_INFINITY
+            val atmLongitude = coordinates.longitude?.toDouble() ?: return Double.POSITIVE_INFINITY
 
             val x = atmLatitude.minus(latitude.toDouble()).pow(2)
             val y = atmLongitude.minus(longitude.toDouble()).pow(2)
