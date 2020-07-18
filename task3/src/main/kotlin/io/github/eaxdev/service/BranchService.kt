@@ -9,10 +9,7 @@ import org.apache.commons.math3.stat.descriptive.rank.Median
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.time.temporal.ChronoUnit
-import kotlin.math.round
-import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 
@@ -44,9 +41,16 @@ class BranchService {
                 .groupBy { it.branch }.toMap()
         }
 
+        if (filteredQueries.isEmpty()) throw BranchNotFound()
+
+        val branch = filteredQueries.keys.first()
+
+        val predicting = if ((filteredQueries[branch] ?: emptyList()).isEmpty()) 0
+        else calculatePredicting(filteredQueries.values.first())
+
         return BranchDtoWithPredicting.of(
-            branch = filteredQueries.keys.first(),
-            predicting = calculatePredicting(filteredQueries.values.first()),
+            branch = branch,
+            predicting = predicting,
             dayOfWeek = dayOfWeek,
             hourOfDay = hourOfDay
         )
