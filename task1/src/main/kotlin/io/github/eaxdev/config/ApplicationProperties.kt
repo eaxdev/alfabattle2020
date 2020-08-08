@@ -10,5 +10,6 @@ data class ApplicationProperties(
     @NotEmpty val alfaClientId: String,
     @NotEmpty val alfaAtmInfoUrl: String,
     @NotEmpty val privateKey: String,
-    @NotEmpty val certificate: String
+    @NotEmpty val certificate: String,
+    @NotEmpty val alfikUrl: String
 )

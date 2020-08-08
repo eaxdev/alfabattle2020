@@ -1,13 +1,16 @@
 package io.github.eaxdev.provider
 
+import io.github.eaxdev.config.ApplicationProperties
 import io.github.eaxdev.logger
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.messaging.simp.stomp.*
+import org.springframework.messaging.simp.stomp.StompCommand
+import org.springframework.messaging.simp.stomp.StompHeaders
+import org.springframework.messaging.simp.stomp.StompSession
+import org.springframework.messaging.simp.stomp.StompSessionHandler
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.messaging.WebSocketStompClient
 import java.beans.ConstructorProperties
 import java.lang.reflect.Type
-import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
@@ -26,10 +29,13 @@ class AlfikInfoProvider {
     @Autowired
     private lateinit var stompClient: WebSocketStompClient
 
+    @Autowired
+    private lateinit var properties: ApplicationProperties
+
     fun getAlfikByDeviceId(deviceId: Int): AlfikResponse {
         val request = AlfikRequest(deviceId)
 
-        val url = "ws://localhost:8100"
+        val url = properties.alfikUrl
         val topic = "/topic/alfik"
 
         val response = AtomicReference<AlfikResponse>()

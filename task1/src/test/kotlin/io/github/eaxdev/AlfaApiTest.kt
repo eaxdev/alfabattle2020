@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.testcontainers.containers.FixedHostPortGenericContainer
 import org.testcontainers.containers.GenericContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+
 
 @Testcontainers
 @SpringJUnitConfig
@@ -22,8 +23,19 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest(classes = [Application::class])
 class AlfaApiTest {
 
-    val websocketContainer = FixedHostPortGenericContainer<Nothing>("arpmipg/alfa-battle:task1-websocket")
-        .apply { withFixedExposedPort(8100, 8100) }
+    companion object {
+        private val websocketContainer = GenericContainer<Nothing>(
+            "arpmipg/alfa-battle:task1-websocket"
+        )
+            .apply { withExposedPorts(8100) }
+
+        @JvmStatic
+        @DynamicPropertySource
+        fun wsProperties(registry: DynamicPropertyRegistry) {
+            websocketContainer.start()
+            registry.add("application.alfik-url") { "ws://localhost:${websocketContainer.firstMappedPort}" }
+        }
+    }
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -100,9 +112,6 @@ class AlfaApiTest {
 
     @Test
     fun getNearestAtmWithAlfik1Sample() {
-        if (!websocketContainer.isRunning) {
-            websocketContainer.start()
-        }
         mockMvc.perform(
             MockMvcRequestBuilders.get("/atms/nearest-with-alfik?latitude=55.66&longitude=37.63&alfik=300000")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -118,9 +127,6 @@ class AlfaApiTest {
 
     @Test
     fun getNearestAtmWithAlfik2Sample() {
-        if (!websocketContainer.isRunning) {
-            websocketContainer.start()
-        }
         mockMvc.perform(
             MockMvcRequestBuilders.get("/atms/nearest-with-alfik?latitude=55.66&longitude=37.63&alfik=400000")
                 .contentType(MediaType.APPLICATION_JSON)

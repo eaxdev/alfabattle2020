@@ -6,3 +6,4 @@ application:
   alfa-atm-info-url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service/atms
   private-key: classpath:apidevelopers.key
   certificate: classpath:apidevelopers.cer
+  alfik-url: ws://localhost:8100
