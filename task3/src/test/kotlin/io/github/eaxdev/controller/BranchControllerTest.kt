@@ -42,6 +42,15 @@ class BranchControllerTest {
     }
 
     @Test
+    fun getBranchByIdNotFoundSample() {
+        mockMvc.perform(
+            get("/branches/1")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+    }
+
+    @Test
     @DataSet("branches.yml")
     fun getNearestBranchByIdSample() {
         mockMvc.perform(
@@ -55,6 +64,22 @@ class BranchControllerTest {
             .andExpect(jsonPath("$.lat", equalTo(55.7695)))
             .andExpect(jsonPath("$.address", equalTo("Цветной бул., 16/1")))
             .andExpect(jsonPath("$.distance", equalTo(430)))
+    }
+
+    @Test
+    @DataSet("branches.yml")
+    fun getNearestBranchById() {
+        mockMvc.perform(
+            get("/branches?lat=55.672391&lon=37.562423")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id", equalTo(627)))
+            .andExpect(jsonPath("$.title", equalTo("Тверская")))
+            .andExpect(jsonPath("$.lon", equalTo(37.6064)))
+            .andExpect(jsonPath("$.lat", equalTo(55.7646)))
+            .andExpect(jsonPath("$.address", equalTo("Тверская ул., 16")))
+            .andExpect(jsonPath("$.distance", equalTo(10617)))
     }
 
     @Test

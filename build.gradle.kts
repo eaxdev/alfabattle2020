@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.3.1.RELEASE" apply false
-    id("io.spring.dependency-management") version "1.0.9.RELEASE" apply false
-    kotlin("jvm") version "1.3.72" apply false
-    kotlin("plugin.spring") version "1.3.50" apply false
-    id("org.openapi.generator") version "4.3.1" apply false
+    id("org.springframework.boot") version "2.4.3" apply false
+    id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
+    kotlin("jvm") version "1.4.31" apply false
+    kotlin("plugin.spring") version "1.4.31" apply false
+    id("org.openapi.generator") version "5.0.1" apply false
 }
 
 repositories {

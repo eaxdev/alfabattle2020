@@ -43,16 +43,31 @@ class AlfaApiTest {
     @Test
     fun getAtmInfo() {
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/atms/153475")
+            MockMvcRequestBuilders.get("/atms/153463")
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.city", equalTo("Москва")))
-            .andExpect(jsonPath("$.deviceId", equalTo(153475)))
-            .andExpect(jsonPath("$.latitude", equalTo("55.77813")))
-            .andExpect(jsonPath("$.longitude", equalTo("37.666618")))
+            .andExpect(jsonPath("$.deviceId", equalTo(153463)))
+            .andExpect(jsonPath("$.latitude", equalTo("55.6610213")))
+            .andExpect(jsonPath("$.longitude", equalTo("37.6309405")))
             .andExpect(jsonPath("$.payments", equalTo(false)))
-            .andExpect(jsonPath("$.location", equalTo("Нижняя Красносельская ул., 6, стр. 1")))
+            .andExpect(jsonPath("$.location", equalTo("Старокаширское ш., 4, корп. 10")))
+    }
+
+    @Test
+    fun getAtmInfoWithPayments() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/220588")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.city", equalTo("Ломоносов")))
+            .andExpect(jsonPath("$.deviceId", equalTo(220588)))
+            .andExpect(jsonPath("$.latitude", equalTo("59.903088")))
+            .andExpect(jsonPath("$.longitude", equalTo("29.768237")))
+            .andExpect(jsonPath("$.payments", equalTo(true)))
+            .andExpect(jsonPath("$.location", equalTo("ул. Михайловская,  д. 40/7,  литер А")))
     }
 
     @Test
@@ -83,6 +98,21 @@ class AlfaApiTest {
             .andExpect(jsonPath("$.longitude", equalTo("37.6309405")))
             .andExpect(jsonPath("$.payments", equalTo(false)))
             .andExpect(jsonPath("$.location", equalTo("Старокаширское ш., 4, корп. 10")))
+    }
+
+    @Test
+    fun getNearestAtmInfoSampleWithPayments() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/atms/nearest?latitude=55.66&longitude=37.63&payments=true")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.city", equalTo("Москва")))
+            .andExpect(jsonPath("$.deviceId", equalTo(210612)))
+            .andExpect(jsonPath("$.latitude", equalTo("55.66442")))
+            .andExpect(jsonPath("$.longitude", equalTo("37.628051")))
+            .andExpect(jsonPath("$.payments", equalTo(true)))
+            .andExpect(jsonPath("$.location", equalTo("Каширское шоссе, д. 14")))
     }
 
     @Test
@@ -146,4 +176,8 @@ class AlfaApiTest {
             .andExpect(jsonPath("$.[1].payments", equalTo(false)))
             .andExpect(jsonPath("$.[1].location", equalTo("Каширское ш., 18")))
     }
+
+    //test cases from authors
+
+
 }
