@@ -1,0 +1,34 @@
+{
+  "countLoan": 4,
+  "sumAmountLoans": 1058400.0,
+  "loans": [
+    {
+      "loan": "434224",
+      "amount": 7100,
+      "document": "737767072",
+      "startdate": "2019-09-18",
+      "period": 12
+    },
+    {
+      "loan": "917105",
+      "amount": 283600,
+      "document": "737767072",
+      "startdate": "2019-12-22",
+      "period": 12
+    },
+    {
+      "loan": "692147",
+      "amount": 300800,
+      "document": "737767072",
+      "startdate": "2016-08-01",
+      "period": 24
+    },
+    {
+      "loan": "145020",
+      "amount": 466900,
+      "document": "737767072",
+      "startdate": "2017-01-16",
+      "period": 36
+    }
+  ]
+}

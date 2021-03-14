@@ -1,2 +1,15 @@
 server:
   port: 8084
+
+spring:
+  elasticsearch:
+    rest:
+      uris: localhost:9200
+      read-timeout: 10s
+
+management:
+  endpoints:
+    web:
+      base-path: /admin
+      exposure:
+        include: info, health
