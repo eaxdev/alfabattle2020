@@ -17,6 +17,8 @@ fun DataTypeProvider.timeType(): String = "DATE"
 
 class JavaLocalTimeColumnType : ColumnType(), IDateColumnType {
 
+    override val hasTimePart: Boolean = true
+
     override fun sqlType(): String = currentDialect.dataTypeProvider.timeType()
 
     override fun nonNullValueToString(value: Any): String {
