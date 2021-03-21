@@ -109,4 +109,30 @@ class LoanControllerTest {
         val actual = response.contentAsString
         JSONAssert.assertEquals(readFileAsString("expected/LoanHistory1.json"), actual, JSONCompareMode.STRICT)
     }
+
+    @Test
+    fun getCreditClosed() {
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.get("/loans/creditClosed")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn().response
+
+        val actual = response.contentAsString
+        JSONAssert.assertEquals(readFileAsString("expected/CreditClosed1.json"), actual, JSONCompareMode.STRICT)
+    }
+
+    @Test
+    fun loansSortByPersonBirthday() {
+        val response = mockMvc.perform(
+            MockMvcRequestBuilders.get("/loans/loansSortByPersonBirthday")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn().response
+
+        val actual = response.contentAsString
+        JSONAssert.assertEquals(readFileAsString("expected/LoansSortByPersonBirthday1.json"), actual, JSONCompareMode.STRICT)
+    }
 }

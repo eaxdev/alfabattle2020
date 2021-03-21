@@ -1,12 +1,14 @@
 package io.github.eaxdev.dto
 
 import io.github.eaxdev.model.Loan
+import java.math.BigDecimal
+import java.time.LocalDate
 
 data class LoanDto(
     val loan: String,
+    val amount: BigDecimal,
     val document: String,
-    val amount: Double,
-    val startdate: String,
+    val startdate: LocalDate,
     val period: Int
 ) {
     companion object {
@@ -24,14 +26,14 @@ data class LoanDto(
 
 data class LoanHistoryDto(
     val countLoan: Int,
-    val sumAmountLoans: Double,
+    val sumAmountLoans: BigDecimal,
     val loans: List<LoanDto>
 ) {
     companion object {
         fun of(loans: List<Loan>): LoanHistoryDto {
             return LoanHistoryDto(
                 countLoan = loans.size,
-                sumAmountLoans = loans.sumByDouble { it.amount },
+                sumAmountLoans = loans.sumOf { it.amount },
                 loans = loans.map { LoanDto.of(it) }
             )
         }

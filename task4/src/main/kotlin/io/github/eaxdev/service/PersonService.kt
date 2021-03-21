@@ -2,12 +2,15 @@ package io.github.eaxdev.service
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.github.eaxdev.model.Loan
 import io.github.eaxdev.model.Person
-import io.github.eaxdev.repository.LoanRepository
 import io.github.eaxdev.repository.PersonRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.io.File
+import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 
 private data class PersonDto(
@@ -44,13 +47,18 @@ class PersonService(
         personRepository.saveAll(persons.map { it.toPerson() })
     }
 
+    fun findAllSortByBirthday(pageable: Pageable): Page<Person> {
+        val sortedPageable = PageRequest.of(pageable.pageNumber, pageable.pageSize, Sort.by(Sort.Order.desc( "birthday")))
+        return personRepository.findAll(sortedPageable)
+    }
+
     private fun PersonDto.toPerson(): Person {
         return Person(
             id = id,
             docid = docId,
             fio = fio,
             birthday = convertDate(birthday),
-            salary = salary.toDouble() * 100,
+            salary = salary.toBigDecimal().multiply(BigDecimal(100)),
             gender = gender
         )
     }

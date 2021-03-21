@@ -1,0 +1,169 @@
+{
+  "content": [
+    {
+      "loan": "631553",
+      "document": "023665566",
+      "amount": 403000.0,
+      "startdate": "2019-06-01",
+      "period": 12
+    },
+    {
+      "loan": "222398",
+      "document": "074658188",
+      "amount": 265400.0,
+      "startdate": "2017-09-22",
+      "period": 12
+    },
+    {
+      "loan": "434224",
+      "document": "737767072",
+      "amount": 7100.0,
+      "startdate": "2019-09-18",
+      "period": 12
+    },
+    {
+      "loan": "790874",
+      "document": "784735253",
+      "amount": 29000.0,
+      "startdate": "2016-08-12",
+      "period": 48
+    },
+    {
+      "loan": "826942",
+      "document": "788117788",
+      "amount": 329400.0,
+      "startdate": "2016-01-29",
+      "period": 48
+    },
+    {
+      "loan": "975101",
+      "document": "504356570",
+      "amount": 314400.0,
+      "startdate": "2019-02-26",
+      "period": 12
+    },
+    {
+      "loan": "740562",
+      "document": "411284272",
+      "amount": 199300.0,
+      "startdate": "2019-02-26",
+      "period": 24
+    },
+    {
+      "loan": "191040",
+      "document": "861384356",
+      "amount": 367900.0,
+      "startdate": "2018-03-19",
+      "period": 24
+    },
+    {
+      "loan": "475966",
+      "document": "456005251",
+      "amount": 380700.0,
+      "startdate": "2015-06-19",
+      "period": 48
+    },
+    {
+      "loan": "692826",
+      "document": "027665876",
+      "amount": 448900.0,
+      "startdate": "2017-01-16",
+      "period": 48
+    },
+    {
+      "loan": "162800",
+      "document": "764220775",
+      "amount": 293500.0,
+      "startdate": "2020-02-24",
+      "period": 12
+    },
+    {
+      "loan": "433512",
+      "document": "051407172",
+      "amount": 49800.0,
+      "startdate": "2017-08-16",
+      "period": 12
+    },
+    {
+      "loan": "282396",
+      "document": "027665876",
+      "amount": 175200.0,
+      "startdate": "2015-09-21",
+      "period": 48
+    },
+    {
+      "loan": "672856",
+      "document": "815530531",
+      "amount": 357800.0,
+      "startdate": "2017-11-15",
+      "period": 24
+    },
+    {
+      "loan": "184115",
+      "document": "616200657",
+      "amount": 88200.0,
+      "startdate": "2015-02-27",
+      "period": 48
+    },
+    {
+      "loan": "949382",
+      "document": "665630363",
+      "amount": 391600.0,
+      "startdate": "2015-07-14",
+      "period": 24
+    },
+    {
+      "loan": "129954",
+      "document": "051407172",
+      "amount": 89700.0,
+      "startdate": "2016-06-17",
+      "period": 36
+    },
+    {
+      "loan": "993556",
+      "document": "233807285",
+      "amount": 254700.0,
+      "startdate": "2017-02-04",
+      "period": 24
+    },
+    {
+      "loan": "794920",
+      "document": "613210868",
+      "amount": 317300.0,
+      "startdate": "2015-07-02",
+      "period": 48
+    },
+    {
+      "loan": "664947",
+      "document": "061375811",
+      "amount": 308000.0,
+      "startdate": "2015-07-16",
+      "period": 48
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalElements": 201,
+  "totalPages": 11,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "first": true,
+  "numberOfElements": 20,
+  "empty": false
+}

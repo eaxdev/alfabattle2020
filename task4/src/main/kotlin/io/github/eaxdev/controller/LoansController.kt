@@ -1,11 +1,10 @@
 package io.github.eaxdev.controller
 
-import io.github.eaxdev.dto.LoadResultDto
-import io.github.eaxdev.dto.LoanDto
-import io.github.eaxdev.dto.LoanHistoryDto
-import io.github.eaxdev.dto.PersonDto
+import io.github.eaxdev.dto.*
 import io.github.eaxdev.service.LoansService
 import io.github.eaxdev.service.PersonService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -40,6 +39,23 @@ class LoansController(val loansService: LoansService, val personService: PersonS
 
     @GetMapping("/creditHistory/{documentId}")
     fun loadHistory(@PathVariable("documentId") documentId: String) : ResponseEntity<LoanHistoryDto> {
-        return ResponseEntity.ok(LoanHistoryDto.of(loansService.loadHistory(documentId)))
+        return ResponseEntity.ok(LoanHistoryDto.of(loansService.findAllByDocId(documentId)))
+    }
+
+    @GetMapping("/creditClosed")
+    fun creditClosed(pageable: Pageable) : ResponseEntity<Page<LoanDto>> {
+        return ResponseEntity.ok(loansService.loansClosed(pageable).map { LoanDto.of(it) })
+    }
+
+    @GetMapping("/loansSortByPersonBirthday")
+    fun loansSortByPersonBirthday(pageable: Pageable) : ResponseEntity<Page<PersonWithLoansDto>> {
+        val persons = personService.findAllSortByBirthday(pageable)
+
+        val result = persons.map {
+            val loans = loansService.findAllByDocId(it.docid)
+            PersonWithLoansDto.of(it, loans)
+        }
+
+        return ResponseEntity.ok(result)
     }
 }
